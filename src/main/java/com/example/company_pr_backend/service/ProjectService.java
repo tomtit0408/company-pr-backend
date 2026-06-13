@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import java.text.Normalizer;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
+import java.util.regex.Pattern;
 
 @Service
 public class ProjectService {
@@ -18,6 +20,14 @@ public class ProjectService {
         this.projectRepository = projectRepository;
     }
 
+    public List<Project> getProjects() {
+        return projectRepository.findAllByOrderByIdDesc();
+    }
+
+    public Optional<Project> getProjectBySlug(String slug) {
+        return projectRepository.findBySlug(slug);
+    }
+
     public Project createProject(ProjectRequest request) {
         String slug = createSlug(request.getTitle());
 
@@ -25,20 +35,13 @@ public class ProjectService {
                 request.getTitle(),
                 slug,
                 request.getCategory(),
-                request.getDescription(),
-                request.getImage()
+                request.getLocation(),
+                request.getYear(),
+                request.getImage(),
+                request.getDescription()
         );
 
         return projectRepository.save(project);
-    }
-
-    public List<Project> getAllProjects() {
-        return projectRepository.findAllByOrderByIdDesc();
-    }
-
-    public Project getProjectBySlug(String slug) {
-        return projectRepository.findBySlug(slug)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy dự án"));
     }
 
     public Project updateProject(Long id, ProjectRequest request) {
@@ -51,8 +54,10 @@ public class ProjectService {
                 request.getTitle(),
                 slug,
                 request.getCategory(),
-                request.getDescription(),
-                request.getImage()
+                request.getLocation(),
+                request.getYear(),
+                request.getImage(),
+                request.getDescription()
         );
 
         return projectRepository.save(project);
@@ -63,15 +68,18 @@ public class ProjectService {
     }
 
     private String createSlug(String text) {
-        String normalized = Normalizer.normalize(text, Normalizer.Form.NFD);
+        String nowhitespace = text.trim().replaceAll("\\s+", "-");
+        String normalized = Normalizer.normalize(nowhitespace, Normalizer.Form.NFD);
 
-        return normalized
-                .replaceAll("\\p{M}", "")
-                .replace("đ", "d")
-                .replace("Đ", "d")
-                .toLowerCase(Locale.ROOT)
-                .replaceAll("[^a-z0-9\\s-]", "")
-                .trim()
-                .replaceAll("\\s+", "-");
+        String slug = Pattern.compile("\\p{InCombiningDiacriticalMarks}+")
+                .matcher(normalized)
+                .replaceAll("");
+
+        slug = slug.toLowerCase(Locale.ENGLISH)
+                .replaceAll("đ", "d")
+                .replaceAll("[^a-z0-9-]", "")
+                .replaceAll("-+", "-");
+
+        return slug;
     }
 }

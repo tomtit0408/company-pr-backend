@@ -7,14 +7,18 @@ public class ProjectRequest {
     @NotBlank(message = "Tên dự án không được để trống")
     private String title;
 
-    @NotBlank(message = "Loại dự án không được để trống")
+    @NotBlank(message = "Danh mục dự án không được để trống")
     private String category;
 
-    @NotBlank(message = "Mô tả dự án không được để trống")
-    private String description;
+    private String location;
+
+    private String year;
 
     @NotBlank(message = "Hình ảnh dự án không được để trống")
     private String image;
+
+    @NotBlank(message = "Mô tả dự án không được để trống")
+    private String description;
 
     public ProjectRequest() {
     }
@@ -34,13 +38,21 @@ public class ProjectRequest {
     public void setCategory(String category) {
         this.category = category;
     }
-    
-    public String getDescription() {
-        return description;
+
+    public String getLocation() {
+        return location;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
     }
 
     public String getImage() {
@@ -49,5 +61,13 @@ public class ProjectRequest {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

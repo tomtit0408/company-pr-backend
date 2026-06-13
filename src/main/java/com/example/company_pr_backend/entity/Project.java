@@ -17,11 +17,15 @@ public class Project {
 
     private String category;
 
-    @Column(columnDefinition = "TEXT")
-    private String description;
+    private String location;
+
+    private String year;
 
     @Column(columnDefinition = "TEXT")
     private String image;
+
+    @Column(columnDefinition = "TEXT")
+    private String description;
 
     private LocalDateTime createdAt;
 
@@ -30,12 +34,22 @@ public class Project {
     public Project() {
     }
 
-    public Project(String title, String slug, String category, String description, String image) {
+    public Project(
+            String title,
+            String slug,
+            String category,
+            String location,
+            String year,
+            String image,
+            String description
+    ) {
         this.title = title;
         this.slug = slug;
         this.category = category;
-        this.description = description;
+        this.location = location;
+        this.year = year;
         this.image = image;
+        this.description = description;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }
@@ -56,12 +70,20 @@ public class Project {
         return category;
     }
 
-    public String getDescription() {
-        return description;
+    public String getLocation() {
+        return location;
+    }
+
+    public String getYear() {
+        return year;
     }
 
     public String getImage() {
         return image;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -72,12 +94,22 @@ public class Project {
         return updatedAt;
     }
 
-    public void update(String title, String slug, String category, String description, String image) {
+    public void update(
+            String title,
+            String slug,
+            String category,
+            String location,
+            String year,
+            String image,
+            String description
+    ) {
         this.title = title;
         this.slug = slug;
         this.category = category;
-        this.description = description;
+        this.location = location;
+        this.year = year;
         this.image = image;
+        this.description = description;
         this.updatedAt = LocalDateTime.now();
     }
 }
