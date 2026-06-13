@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/uploads")
-@CrossOrigin(origins = {"http://localhost:5173", "http://localhost:5174"})
+
 public class UploadController {
 
     @Value("${app.base-url}")
