@@ -10,7 +10,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/banners")
-@CrossOrigin(origins = {"http://localhost:5173", "http://localhost:5174"})
 public class HeroBannerController {
 
     private final HeroBannerService heroBannerService;
